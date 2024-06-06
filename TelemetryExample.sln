@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherAPI", "WeatherAPI\WeatherAPI.csproj", "{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Instruments", "Instruments", "{7EF807D3-928A-4D67-8834-A1FF8DD3B51F}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{E73026AD-192B-47B4-A347-E666EA977BAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loki", "loki", "{2AB06FEA-6E66-4C39-82D5-03817347EC51}"
+	ProjectSection(SolutionItems) = preProject
+		config\loki\loki.yaml = config\loki\loki.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{DA2E97B8-6AFE-4A11-8AD7-A9959DF17C4F}"
+	ProjectSection(SolutionItems) = preProject
+		config\prometheus\prometheus.example.yml = config\prometheus\prometheus.example.yml
+		config\prometheus\prometheus.yml = config\prometheus\prometheus.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E73026AD-192B-47B4-A347-E666EA977BAE} = {7EF807D3-928A-4D67-8834-A1FF8DD3B51F}
+		{2AB06FEA-6E66-4C39-82D5-03817347EC51} = {E73026AD-192B-47B4-A347-E666EA977BAE}
+		{DA2E97B8-6AFE-4A11-8AD7-A9959DF17C4F} = {E73026AD-192B-47B4-A347-E666EA977BAE}
+	EndGlobalSection
+EndGlobal
