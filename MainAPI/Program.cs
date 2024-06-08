@@ -94,7 +94,8 @@ internal static class ServicesExtensions
                         WeatherMetrics.GlobalSystemName // That attribute is visible in the target_info separate metric.
                 }))
             .WithTracing(tracerProviderBuilder => tracerProviderBuilder
-                .AddSource(WeatherMetrics.ApplicationName)
+                .AddSource("MainAPI.WeatherForecastController")
+                .AddSource("MainAPI.WeatherService")
                 .SetErrorStatusOnException()
                 .SetSampler(new AlwaysOnSampler())
                 .AddHttpClientInstrumentation()

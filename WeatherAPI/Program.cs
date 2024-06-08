@@ -112,6 +112,7 @@ internal static class ServicesExtensions
                 .SetSampler(new AlwaysOnSampler())
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(options => { options.RecordException = true; })
+                .AddRedisInstrumentation()
                 .AddOtlpExporter(options =>
                 {
                     options.ExportProcessorType = ExportProcessorType.Batch;

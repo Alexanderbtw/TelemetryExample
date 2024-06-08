@@ -15,8 +15,10 @@ services:
         ports:
             - "9090:9090"
         volumes:
-            - ./config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
+            - ./config/prometheus/prometheus-collector.yml:/etc/prometheus/prometheus.yml
             - prometheus:/prometheus
+        environment:
+            - config.file=/etc/prometheus/prometheus-collector.yml
     redis-exporter:
         image: bitnami/redis-exporter
         environment:

@@ -17,8 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loki", "loki", "{2AB06FEA-6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{DA2E97B8-6AFE-4A11-8AD7-A9959DF17C4F}"
 	ProjectSection(SolutionItems) = preProject
-		config\prometheus\prometheus.yaml = config\prometheus\prometheus.yaml
-		config\prometheus\prometheus.example.yaml = config\prometheus\prometheus.example.yaml
+		config\prometheus\prometheus-collector.yml = config\prometheus\prometheus-collector.yml
+		config\prometheus\prometheus.yml = config\prometheus\prometheus.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherAPI", "WeatherAPI\WeatherAPI.csproj", "{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}"

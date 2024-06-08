@@ -14,7 +14,7 @@ public class WeatherForecastController(
     WeatherMetrics _weatherMetrics)
     : ControllerBase
 {
-    private static readonly ActivitySource _activitySource = new("MainAPI.WeatherForecast", "1.0.0");
+    private static readonly ActivitySource _activitySource = new("MainAPI.WeatherForecastController", "1.0.0");
 
     [HttpGet("Summary")]
     public async Task<ActionResult<string>> GetSummary(string city)
