@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherAPI", "WeatherAPI\WeatherAPI.csproj", "{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainAPI", "MainAPI\MainAPI.csproj", "{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Instruments", "Instruments", "{7EF807D3-928A-4D67-8834-A1FF8DD3B51F}"
 	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
+		docker-compose.yaml = docker-compose.yaml
+		docker-compose.prometheus.yaml = docker-compose.prometheus.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{E73026AD-192B-47B4-A347-E666EA977BAE}"
@@ -16,8 +17,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loki", "loki", "{2AB06FEA-6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prometheus", "prometheus", "{DA2E97B8-6AFE-4A11-8AD7-A9959DF17C4F}"
 	ProjectSection(SolutionItems) = preProject
-		config\prometheus\prometheus.example.yml = config\prometheus\prometheus.example.yml
-		config\prometheus\prometheus.yml = config\prometheus\prometheus.yml
+		config\prometheus\prometheus.yaml = config\prometheus\prometheus.yaml
+		config\prometheus\prometheus.example.yaml = config\prometheus\prometheus.example.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherAPI", "WeatherAPI\WeatherAPI.csproj", "{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "otel-collector", "otel-collector", "{C975EBC0-BD9C-4644-BABE-EE1FC3C23373}"
+	ProjectSection(SolutionItems) = preProject
+		config\otel-collector\otel-collector.yaml = config\otel-collector\otel-collector.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jaeger", "jaeger", "{FAD62E1F-2632-4AA1-AF8C-8BE36350AB0E}"
+	ProjectSection(SolutionItems) = preProject
+		config\jaeger\jaeger.yaml = config\jaeger\jaeger.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{8E0BB86B-F2BD-4C98-BB02-173F073D8B7B}"
+	ProjectSection(SolutionItems) = preProject
+		config\grafana\grafana.yaml = config\grafana\grafana.yaml
 	EndProjectSection
 EndProject
 Global
@@ -30,10 +48,17 @@ Global
 		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E73026AD-192B-47B4-A347-E666EA977BAE} = {7EF807D3-928A-4D67-8834-A1FF8DD3B51F}
 		{2AB06FEA-6E66-4C39-82D5-03817347EC51} = {E73026AD-192B-47B4-A347-E666EA977BAE}
 		{DA2E97B8-6AFE-4A11-8AD7-A9959DF17C4F} = {E73026AD-192B-47B4-A347-E666EA977BAE}
+		{C975EBC0-BD9C-4644-BABE-EE1FC3C23373} = {E73026AD-192B-47B4-A347-E666EA977BAE}
+		{FAD62E1F-2632-4AA1-AF8C-8BE36350AB0E} = {E73026AD-192B-47B4-A347-E666EA977BAE}
+		{8E0BB86B-F2BD-4C98-BB02-173F073D8B7B} = {E73026AD-192B-47B4-A347-E666EA977BAE}
 	EndGlobalSection
 EndGlobal
