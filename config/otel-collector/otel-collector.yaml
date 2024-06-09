@@ -13,8 +13,8 @@ processors:
 exporters:
     prometheus:
         endpoint: 0.0.0.0:8889 # accept connection to 8889 from any addresses
-    jaeger:
-        endpoint: jaeger:14250
+    otlp/jaeger:
+        endpoint: http://jaeger:4317
         tls:
             insecure: true
     loki:
@@ -37,8 +37,8 @@ service:
         traces:
             receivers: [ otlp ]
             processors: [ batch ]
-            exporters: [ jaeger ]
+            exporters: [ otlp/jaeger ]
         logs:
             receivers: [ otlp ]
-            processors: [ batch ]
+            processors: [ resource, batch ]
             exporters: [ loki ]

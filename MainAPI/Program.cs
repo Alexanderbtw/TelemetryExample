@@ -126,14 +126,18 @@ internal static class ServicesExtensions
         {
             cfg.Enrich.FromLogContext()
                 .ReadFrom.Configuration(ctx.Configuration)
-                .Enrich.WithProperty("service.name", ctx.HostingEnvironment.ApplicationName)
-                .Enrich.WithProperty("environment.name", ctx.HostingEnvironment.EnvironmentName)
+                .Enrich.WithProperty("ApplicationName", ctx.HostingEnvironment.ApplicationName)
+                .Enrich.WithProperty("EnvironmentName", ctx.HostingEnvironment.EnvironmentName)
                 .WriteTo.Console()
                 .WriteTo.OpenTelemetry(config =>
                 {
                     config.IncludedData = IncludedData.TraceIdField | IncludedData.SpanIdField;
                     config.Protocol = OtlpProtocol.Grpc;
                     config.Endpoint = "http://localhost:4317/otlp/v1/logs";
+                    config.ResourceAttributes = new Dictionary<string, object>
+                    {
+                        { "service.name", ctx.HostingEnvironment.ApplicationName }
+                    };
                 });
         });
         return host;

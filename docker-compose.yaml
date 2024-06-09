@@ -24,14 +24,11 @@ services:
         environment:
             - REDIS_ADDR=redis://redis:6379
     otel-collector:
-        image: otel/opentelemetry-collector-contrib:0.84.0
+        image: otel/opentelemetry-collector-contrib
         command: --config /etc/otel-collector.yaml
         volumes:
             - ./config/otel-collector/otel-collector.yaml:/etc/otel-collector.yaml
         ports:
-            # - "8888" # Prometheus metrics exposed by the collector for scrape
-            # - "8889" # Prometheus exporter metrics
-            # - "4318" # OTLP http receiver
             - "4317:4317" # OTLP gRPC receiver
             - "13133:13133" # health_check extension
             - "55679:55679" # zpages extension
@@ -44,16 +41,11 @@ services:
         image: jaegertracing/all-in-one
         ports:
             - "16686:16686"
-            # - "14250" accept model.proto
     loki:
         image: grafana/loki
         command: -config.file=/etc/loki/local-config.yaml
-        ports:
-            - "3100:3100" # http
-            - "9095:9095" # grpc
         volumes:
             - loki:/loki
-            - ./config/loki/loki.yaml:/etc/loki/local-config.yaml
 
     grafana:
         image: grafana/grafana-oss
