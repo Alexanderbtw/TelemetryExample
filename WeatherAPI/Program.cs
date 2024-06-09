@@ -1,33 +1,29 @@
 using System.Diagnostics;
 using System.Text.Json;
-using Microsoft.Extensions.Caching.Distributed;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using StackExchange.Redis;
 
 namespace WeatherAPI;
 
 internal static class Program
 {
     private static readonly ActivitySource _activitySource = new("WeatherAPI", "1.0.0");
+    private static readonly IConnectionMultiplexer _redisConnection = ConnectionMultiplexer.Connect("localhost:6379");
 
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddSingleton<IConnectionMultiplexer>(_redisConnection);
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         // builder.Services.AddPrometheusMetrics();
         builder.Services.AddAllTelemetry();
-        builder.Services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration = "localhost:6379";
-            options.InstanceName = AppDomain.CurrentDomain.FriendlyName;
-        });
 
         var app = builder.Build();
-
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -35,16 +31,17 @@ internal static class Program
         }
 
         // app.MapPrometheusScrapingEndpoint();
-        app.MapGet("/weatherforecast/{city}", (IDistributedCache cache, string city) =>
+        app.MapGet("/weatherforecast/{city}", (IConnectionMultiplexer connectionMultiplexer, string city) =>
             {
                 using var activity = _activitySource.StartActivity();
+                var redis = connectionMultiplexer.GetDatabase();
 
                 WeatherForecast? forecast = null;
-                var forecastString = cache.GetString(city);
-                if (forecastString is not null)
+                var forecastString = redis.StringGet(city);
+                if (forecastString.HasValue)
                 {
                     activity?.SetTag("fromCache", true);
-                    forecast = JsonSerializer.Deserialize<WeatherForecast>(forecastString);
+                    forecast = JsonSerializer.Deserialize<WeatherForecast>(forecastString.ToString());
                 }
                 else
                 {
@@ -59,10 +56,7 @@ internal static class Program
                     };
 
                     forecastString = JsonSerializer.Serialize(forecast);
-                    cache.SetString(city, forecastString, new DistributedCacheEntryOptions
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(5)
-                    });
+                    redis.StringSet(city, forecastString, TimeSpan.FromSeconds(10));
                 }
 
                 return forecast;
@@ -70,14 +64,10 @@ internal static class Program
             .WithName("GetWeatherForecast")
             .WithOpenApi();
 
-        var a = AppDomain.CurrentDomain.FriendlyName;
         app.Run();
     }
-}
 
-internal static class ServicesExtensions
-{
-    internal static IServiceCollection AddPrometheusMetrics(this IServiceCollection services)
+    private static IServiceCollection AddPrometheusMetrics(this IServiceCollection services)
     {
         services.AddOpenTelemetry()
             .ConfigureResource(resourceBuilder => resourceBuilder
@@ -97,7 +87,7 @@ internal static class ServicesExtensions
         return services;
     }
 
-    internal static IServiceCollection AddAllTelemetry(this IServiceCollection services)
+    private static IServiceCollection AddAllTelemetry(this IServiceCollection services)
     {
         services.AddOpenTelemetry()
             .ConfigureResource(resourceBuilder => resourceBuilder
@@ -112,7 +102,8 @@ internal static class ServicesExtensions
                 .SetSampler(new AlwaysOnSampler())
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(options => { options.RecordException = true; })
-                .AddRedisInstrumentation()
+                .AddRedisInstrumentation(_redisConnection,
+                    opt => opt.FlushInterval = TimeSpan.FromSeconds(1))
                 .AddOtlpExporter(options =>
                 {
                     options.ExportProcessorType = ExportProcessorType.Batch;

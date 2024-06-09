@@ -30,9 +30,9 @@ services:
             - ./config/otel-collector/otel-collector.yaml:/etc/otel-collector.yaml
         ports:
             # - "8888" # Prometheus metrics exposed by the collector for scrape
-            - "8889:8889" # Prometheus exporter metrics
-            - "4317:4317" # OTLP gRPC receiver
+            # - "8889" # Prometheus exporter metrics
             # - "4318" # OTLP http receiver
+            - "4317:4317" # OTLP gRPC receiver
             - "13133:13133" # health_check extension
             - "55679:55679" # zpages extension
             - "1777:1777" # performance profiler extension
@@ -53,6 +53,7 @@ services:
             - "9095:9095" # grpc
         volumes:
             - loki:/loki
+            - ./config/loki/loki.yaml:/etc/loki/local-config.yaml
 
     grafana:
         image: grafana/grafana-oss
