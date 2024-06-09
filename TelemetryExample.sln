@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Instruments", "Instruments"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yaml = docker-compose.yaml
 		docker-compose.prometheus.yaml = docker-compose.prometheus.yaml
+		docker-compose.aspire.yaml = docker-compose.aspire.yaml
+		docker-compose.full-jaeger.yaml = docker-compose.full-jaeger.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{E73026AD-192B-47B4-A347-E666EA977BAE}"

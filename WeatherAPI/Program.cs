@@ -10,7 +10,7 @@ namespace WeatherAPI;
 
 internal static class Program
 {
-    private static readonly ActivitySource _activitySource = new("WeatherAPI", "1.0.0");
+    private static readonly ActivitySource _activitySource = new(AppDomain.CurrentDomain.FriendlyName, "1.0.0");
     private static readonly IConnectionMultiplexer _redisConnection = ConnectionMultiplexer.Connect("localhost:6379");
 
     public static void Main(string[] args)
@@ -103,13 +103,18 @@ internal static class Program
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(options => { options.RecordException = true; })
                 .AddRedisInstrumentation(_redisConnection,
-                    opt => opt.FlushInterval = TimeSpan.FromSeconds(1))
+                    opt =>
+                    {
+                        opt.Enrich = (activity, eventName) => activity.SetTag("redis.connection", "localhost:6379");
+                        opt.Enrich = (activity, eventName) => activity.SetTag("peer.service", "redis");
+                        opt.FlushInterval = TimeSpan.FromSeconds(1);
+                        opt.EnrichActivityWithTimingEvents = true;
+                    })
                 .AddOtlpExporter(options =>
                 {
                     options.ExportProcessorType = ExportProcessorType.Batch;
                     options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                })
-            )
+                }))
             .WithMetrics(meterProviderBuilder => meterProviderBuilder
                 .AddAspNetCoreInstrumentation() // Add OpenTelemetry.Instrumentation.AspNetCore nuget package
                 .AddHttpClientInstrumentation() // Add OpenTelemetry.Instrumentation.Http nuget package

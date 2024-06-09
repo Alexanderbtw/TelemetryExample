@@ -5,7 +5,7 @@ namespace MainAPI.Services;
 
 public class WeatherService(WeatherHttpClient _weatherHttpClient)
 {
-    private static readonly ActivitySource _activitySource = new("MainAPI.WeatherService", "1.0.0");
+    private static readonly ActivitySource _activitySource = new(nameof(WeatherService), "1.0.0");
 
     public async Task<WeatherForecast> GetForecastAsync(string city)
     {

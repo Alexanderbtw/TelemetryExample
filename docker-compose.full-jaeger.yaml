@@ -24,8 +24,6 @@ services:
     image: bitnami/redis-exporter
     environment:
       - REDIS_ADDR=redis://redis:6379
-    depends_on:
-      - redis
   otel-collector:
     image: otel/opentelemetry-collector-contrib
     command: --config /etc/otel-collector.yaml
@@ -38,8 +36,23 @@ services:
       - "1777:1777" # performance profiler extension
   jaeger:
     image: jaegertracing/all-in-one
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://elasticsearch:9200
     ports:
       - "16686:16686"
+    depends_on:
+      - elasticsearch
+    command: [
+      "--es.tls.enabled=true",
+      "--es.tls.skip-host-verify=true" ]
+  elasticsearch:
+    image: elasticsearch:8.14.0
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
   loki:
     image: grafana/loki
     command: -config.file=/etc/loki/local-config.yaml
@@ -57,7 +70,3 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
-    depends_on:
-      - loki
-      - prometheus
-      - jaeger
