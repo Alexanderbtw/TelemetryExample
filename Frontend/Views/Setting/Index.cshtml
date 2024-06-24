@@ -1,0 +1,23 @@
+@model Settings
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Settings</h2>
+                    <form asp-action="SetCity" method="post">
+                        <div class="form-group mb-2">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="City" value="@Model.City" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+@model WeatherAPI.WeatherForecast
+@{
+    ViewData["Title"] = "Weather Forecast";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Weather Forecast for @Model.City</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <span class="font-weight-bold">Temperature:</span> @Model.Temperature °C
+                </li>
+                <li class="list-group-item">
+                    <span class="font-weight-bold">Humidity:</span> @Model.Humidity %
+                </li>
+                <li class="list-group-item">
+                    <span class="font-weight-bold">Wind Speed:</span> @Model.WindSpeed km/h
+                </li>
+                <li class="list-group-item">
+                    <span class="font-weight-bold">Summary:</span> @Model.Summary
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

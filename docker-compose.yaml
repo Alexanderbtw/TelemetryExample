@@ -4,7 +4,6 @@ volumes:
   loki:
   grafana:
   prometheus:
-  esdata:
 
 services:
   redis:

@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainAPI", "MainAPI\MainAPI.csproj", "{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Instruments", "Instruments", "{7EF807D3-928A-4D67-8834-A1FF8DD3B51F}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yaml = docker-compose.yaml
@@ -40,20 +38,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{8E0B
 		config\grafana\grafana.yaml = config\grafana\grafana.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "Frontend\Frontend.csproj", "{664CA09D-EE8D-4762-B26B-49A31CB9B1F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F30B5CE-AA6F-40B3-8FBE-AFAFB6EF7FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2647C38-050A-4C32-BBF2-AF5C4ECB3376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{664CA09D-EE8D-4762-B26B-49A31CB9B1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{664CA09D-EE8D-4762-B26B-49A31CB9B1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664CA09D-EE8D-4762-B26B-49A31CB9B1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664CA09D-EE8D-4762-B26B-49A31CB9B1F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E73026AD-192B-47B4-A347-E666EA977BAE} = {7EF807D3-928A-4D67-8834-A1FF8DD3B51F}

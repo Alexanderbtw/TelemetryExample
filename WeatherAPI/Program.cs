@@ -34,6 +34,15 @@ internal static class Program
         app.MapGet("/weatherforecast/{city}", (IConnectionMultiplexer connectionMultiplexer, string city) =>
             {
                 using var activity = _activitySource.StartActivity();
+                switch (Random.Shared.Next(0, 10))
+                {
+                    case 0:
+                        activity?.SetStatus(ActivityStatusCode.Error, "Getting weather error");
+                        return Results.NotFound();
+                    case 1:
+                        throw new InvalidDataException("Getting weather exception");
+                }
+
                 var redis = connectionMultiplexer.GetDatabase();
 
                 WeatherForecast? forecast = null;
@@ -53,13 +62,20 @@ internal static class Program
                         Temperature = Random.Shared.Next(-20, 55),
                         Humidity = Random.Shared.Next(0, 100),
                         WindSpeed = Random.Shared.Next(0, 20),
+                        City = city
+                    };
+                    forecast.Summary = forecast.Temperature switch
+                    {
+                        > 30 => "Hot",
+                        > 10 => "Normal",
+                        _ => "Cold"
                     };
 
                     forecastString = JsonSerializer.Serialize(forecast);
                     redis.StringSet(city, forecastString, TimeSpan.FromSeconds(10));
                 }
 
-                return forecast;
+                return Results.Json(forecast);
             })
             .WithName("GetWeatherForecast")
             .WithOpenApi();
