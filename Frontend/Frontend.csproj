@@ -9,7 +9,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="NSwag.ApiDescription.Client" Version="14.0.8">
+        <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -28,5 +28,13 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\WeatherAPI\WeatherAPI.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <OpenApiReference Include="OpenAPIs/weather.json" SourceUrl="http://localhost:9185/swagger/v1/swagger.json"
+                          Namespace="Frontend"
+                          ClassName="WeatherHTTPClient"
+        >
+            <Options>/UseBaseUrl:false /GenerateClientInterfaces:true /JsonLibrary:SystemTextJson</Options>
+        </OpenApiReference>
     </ItemGroup>
 </Project>

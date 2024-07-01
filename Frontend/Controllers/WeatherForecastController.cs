@@ -34,8 +34,7 @@ public class WeatherForecastController(
         myMetrics.SetWeather(forecast!);
 
         _logger.LogInformation(
-            "Weather forecast for {City} equal to {@Forecast}",
-            city, forecast);
+            "Weather forecast equal to {@Forecast}", forecast);
 
         return View(forecast);
     }
