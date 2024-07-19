@@ -1,5 +1,4 @@
 using Frontend;
-using Frontend.Controllers;
 using Frontend.Services;
 using Frontend.Telemetry;
 using OpenTelemetry.Metrics;
@@ -91,8 +90,6 @@ internal static class ServicesExtensions
                         MyMetrics.GlobalSystemName // That attribute is visible in the target_info separate metric.
                 }))
             .WithTracing(tracerProviderBuilder => tracerProviderBuilder
-                .AddSource(nameof(WeatherForecastController))
-                .AddSource(nameof(SettingController))
                 .AddSource(nameof(WeatherService))
                 .AddSource(nameof(SettingService))
                 .SetErrorStatusOnException()

@@ -10,7 +10,6 @@ namespace WeatherAPI;
 
 internal static class Program
 {
-    private static readonly ActivitySource _activitySource = new(AppDomain.CurrentDomain.FriendlyName, "1.0.0");
     private static readonly IConnectionMultiplexer _redisConnection = ConnectionMultiplexer.Connect("localhost:6379");
 
     public static void Main(string[] args)
@@ -33,7 +32,7 @@ internal static class Program
         // app.MapPrometheusScrapingEndpoint();
         app.MapGet("/weatherforecast/{city}", (IConnectionMultiplexer connectionMultiplexer, string city) =>
             {
-                using var activity = _activitySource.StartActivity();
+                using var activity = Activity.Current;
                 switch (Random.Shared.Next(0, 10))
                 {
                     case 0:

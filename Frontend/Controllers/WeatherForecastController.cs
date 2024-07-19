@@ -14,12 +14,10 @@ public class WeatherForecastController(
     MyMetrics myMetrics)
     : Controller
 {
-    private static readonly ActivitySource _activitySource = new(nameof(WeatherForecastController), "1.0.0");
-
     [HttpGet]
     public async Task<ActionResult<WeatherForecast>> GetForecast()
     {
-        using var activity = _activitySource.StartActivity();
+        using var activity = Activity.Current;
         var city = _settingService.GetCity();
 
         var (isSuccess, forecast, errorMessage) = await _weatherService.GetForecastAsync(city);
@@ -31,6 +29,8 @@ public class WeatherForecastController(
         }
 
         activity?.AddEvent(new ActivityEvent($"Weather forecast for {city} is ready"));
+
+        myMetrics.SummaryRequestsCounter.Add(1, new KeyValuePair<string, object?>("city", city));
         myMetrics.SetWeather(forecast!);
 
         _logger.LogInformation(

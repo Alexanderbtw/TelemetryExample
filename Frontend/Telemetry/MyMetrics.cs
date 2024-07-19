@@ -19,9 +19,9 @@ public class MyMetrics
             .Create(InstrumentsSourceName, "1.0.0");
 
         SummaryRequestsCounter = meter
-            .CreateCounter<int>(name: "city.change.requests",
+            .CreateCounter<int>(name: "weather.get.requests",
                 unit: "Requests",
-                description: "The number of requests to change the city");
+                description: "The number of requests to get weather for the city");
 
         meter.CreateObservableGauge<int>(name: "weather.forecast.temperature",
             observeValue: () => new Measurement<int>(_temperature),
